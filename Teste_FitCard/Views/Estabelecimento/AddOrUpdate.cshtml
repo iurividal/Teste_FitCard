@@ -1,0 +1,90 @@
+﻿@model Teste_FitCard.Models.EstabelecimentoModel
+@{
+    ViewBag.Title = "Cadastro";
+}
+
+<h3>Cadastro/Editar</h3>
+
+
+@using (Html.BeginForm("AddOrUpdate", "Estabelecimento", null, FormMethod.Post, new { @id = "form-cadastro" }))
+{
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(m => m.IdEstabelecimento)
+    <div class="card">
+        <div class="card-header"> Dados do Estabelecimento</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 form-group">
+                    @Html.LabelFor(m => m.NomeRazao):
+                    @Html.TextBoxFor(m => m.NomeRazao, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.CNPJ):
+                    @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-8 form-group">
+                    @Html.LabelFor(m => m.NomeFantasia):
+                    @Html.TextBoxFor(m => m.NomeFantasia, new { @class = "form-control" })
+
+                </div>
+                <div class="col-md-4">
+                    @Html.LabelFor(m => m.Categoria.Categoria)
+                    @Html.DropDownList("Categoria", null, string.Empty, new { @class = "form-control" })
+                </div>
+            </div>
+            <hr />
+            <p><h5>Dados de Contato</h5></p>
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Telefone)
+                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <hr />
+            <p><h5>Dados de Endereço</h5></p>
+            <div class="row">
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Endereco.Estado)
+                    @Html.TextBoxFor(m => m.Endereco.Estado, new { @class = "form-control" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Endereco.Cidade)
+                    @Html.TextBoxFor(m => m.Endereco.Cidade, new { @class = "form-control" })
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    @Html.LabelFor(m => m.Endereco.Logradouro)
+                    @Html.TextBoxFor(m => m.Endereco.Logradouro, new { @class = "form-control" })
+                </div>
+            </div>
+
+            <hr />
+            <p><h5>Dados Bancário</h5></p>
+        </div>
+    </div>
+    <br />
+
+    <button id="btnSubmit" type="submit" class="btn btn-primary">Confirmar</button>
+}
+
+<script>
+
+
+
+</script>
