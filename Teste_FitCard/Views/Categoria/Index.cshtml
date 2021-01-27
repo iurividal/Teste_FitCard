@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Teste_FitCard.Models.CategoriaModel>
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<h3>Categorias</h3>
+
+@using (Html.BeginForm("Index", "Categoria", null, FormMethod.Post, new { @class = "" }))
+{
+    <div class="row">
+        <div class="col-md-2 form-group">
+            Código: @Html.TextBox("IdCategoria", "", new { @class = "form-control", @readonly = true, placeholder = "Automático" })
+        </div>
+
+        <div class="col-md-8 form-group">
+            Categoria: @Html.TextBox("Categoria", "", new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-2 form-inline">
+            <button class="btn btn-primary">Adicionar</button>
+        </div>
+
+    </div>
+
+
+
+
+
+}
+
+<br />
+
+<table id="categorias" class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">
+            Código
+        </th>
+        <th scope="col">
+            Categoria
+        </th>
+        <th scope="col">
+            Ação
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.ToList())
+    {
+        <tr>
+            <th scope="row">@item.IdCategoria</th>
+            <td>@item.Categoria</td>
+            <td><a href="@Url.Action("Delete",new{id=@item.IdCategoria})"><i class="fas fa-trash"></i></a></td>
+        </tr>
+    }
+    </tbody>
+
+</table>
