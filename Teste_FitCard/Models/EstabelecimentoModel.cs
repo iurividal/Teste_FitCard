@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Teste_FitCard.Models
 {
@@ -8,7 +9,9 @@ namespace Teste_FitCard.Models
 
         public string NomeFantasia { get; set; }
 
-        public DateTime DataCadastro { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime? DataCadastro { get; set; }
 
         public CategoriaModel Categoria { get; set; } = new CategoriaModel();
 

@@ -2,14 +2,11 @@
 @{
     ViewBag.Title = "Cadastro";
 }
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script src="~/Scripts/jquery.mask.min.js"></script>
-
 
 <h3>Cadastro/Editar</h3>
 
 
-@using (Html.BeginForm("AddOrUpdate", "Estabelecimento", null, FormMethod.Post, new { @id = "form-cadastro" }))
+@using (Html.BeginForm("AddOrUpdate", "Estabelecimento", null, FormMethod.Post, new { @id = "form-cadastro", @class = "form-validade" }))
 {
     @Html.ValidationSummary()
     @Html.AntiForgeryToken()
@@ -20,19 +17,20 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8 form-group">
-                    @Html.LabelFor(m => m.NomeRazao):
+                    @Html.LabelFor(m => m.NomeRazao)
                     @Html.TextBoxFor(m => m.NomeRazao, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.NomeRazao);
                 </div>
 
                 <div class="col-md-4">
-                    @Html.LabelFor(m => m.CNPJ):
-                    @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control" })
+                    @Html.LabelFor(m => m.CNPJ)
+                    @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control cnpj" })
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-8 form-group">
-                    @Html.LabelFor(m => m.NomeFantasia):
+                    @Html.LabelFor(m => m.NomeFantasia)
                     @Html.TextBoxFor(m => m.NomeFantasia, new { @class = "form-control" })
 
                 </div>
@@ -41,6 +39,13 @@
                     @Html.DropDownList("Categoria", null, string.Empty, new { @class = "form-control" })
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.DataCadastro)
+                    @Html.TextBoxFor(m => m.DataCadastro, new { @class = "form-control date" })
+                </div>
+            </div>
+
             <hr />
             <p><h5>Dados de Contato</h5></p>
             <div class="row">
@@ -79,19 +84,21 @@
 
             <hr />
             <p><h5>Dados Bancário</h5></p>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(m => m.DadosBancario.Agencia)
+                    @Html.TextBoxFor(m => m.DadosBancario.Agencia, new { @class = "form-control agencia" })
+
+                </div>
+                <div class="col-md-6 form-group">
+                    @Html.LabelFor(m => m.DadosBancario.Conta)
+                    @Html.TextBoxFor(m => m.DadosBancario.Conta, new { @class = "form-control contacorrente" })
+                </div>
+            </div>
         </div>
     </div>
     <br />
 
     <button id="btnSubmit" type="submit" class="btn btn-primary">Confirmar</button>
 }
-
-<script>
-
-    $(function() {
-        $('.cnpj').mask('00.000.000/0000-00', { reverse: true });
-    });
-
-    
-
-</script>

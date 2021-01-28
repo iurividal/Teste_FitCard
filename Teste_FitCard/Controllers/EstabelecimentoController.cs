@@ -25,7 +25,7 @@ namespace Teste_FitCard.Controllers
 
             return View(new EstabelecimentoModel());
         }
-        
+
 
         [HttpPost]
         public ActionResult AddOrUpdate(EstabelecimentoModel model)
@@ -33,7 +33,11 @@ namespace Teste_FitCard.Controllers
 
             try
             {
-                ViewBag.error = "Cadastro Realizado com Sucesso";
+                if (ModelState.IsValid)
+                {
+                    ViewBag.error = "Cadastro Realizado com Sucesso";
+                }
+
             }
             catch (Exception e)
             {
