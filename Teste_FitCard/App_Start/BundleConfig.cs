@@ -32,6 +32,9 @@ namespace Teste_FitCard
             //jQuery Validade
             scriptBundle
                  .Include("~/Scripts/jquery.validate.js");
+            //toastr
+            scriptBundle
+                .Include("~/Scripts/toastr.js");
 
             // Bootstrap
             scriptBundle
@@ -41,6 +44,10 @@ namespace Teste_FitCard
             styleBundle
                 .Include("~/Content/bootstrap.css");
 
+            // Bootstrap
+            styleBundle
+                .Include("~/Content/toastr.min.css");
+            
             // Custom site styles
             styleBundle
                 .Include("~/Content/Site.css");

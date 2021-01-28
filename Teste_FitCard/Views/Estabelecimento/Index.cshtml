@@ -1,7 +1,133 @@
-﻿
+﻿@using Teste_FitCard.Models
+@model IEnumerable<Teste_FitCard.Models.EstabelecimentoModel>
 @{
     ViewBag.Title = "Index";
+
+    var LISTA = (IEnumerable<EstabelecimentoModel>)TempData["ESTABELICIMENTOLIST"];
 }
 
-<h2>Index</h2>
 
+
+<h2>Lista de Estabelecimento</h2>
+
+<p class="input-group rounded">
+    <input type="search" id="search" class="form-control rounded" placeholder="Pesquisar" aria-label="Search"
+           aria-describedby="search-addon" />
+    <span class="input-group-text border-0" id="search-addon">
+        <i class="fas fa-search"></i>
+    </span>
+</p>
+
+<table id="estabelecimento" class="table table-responsive table-striped">
+    <thead class="thead-dark">
+        <tr class="text-center">
+
+
+            <th scope="col">
+                #
+            </th>
+
+            <th scope="col">
+                Razão Social
+            </th>
+            @*<th scope="col">
+                    Fantasia
+                </th>*@
+            <th scope="col">
+                CNPJ
+            </th>
+            @*<th scope="col">
+                    E-mail
+                </th>*@
+            <th scope="col">
+                Cidade
+            </th>
+            <th scope="col">
+                Estado
+            </th>
+            <th scope="col">
+                Telefone
+            </th>
+            <th scope="col">
+                Data de Cadastro
+            </th>
+            <th scope="col">
+                Categoria
+            </th>
+            <th scope="col">
+                Status
+            </th>
+            <th scope="col">
+                Agência / Conta
+            </th>
+            <th>
+                Editar
+            </th>
+            <th>
+
+            </th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in LISTA)
+        {
+            <tr class="text-left font-weight-normal">
+
+                <th scope="row">@item.IdEstabelecimento</th>
+                <td>@item.NomeRazao</td>
+                @* <td>@item.NomeFantasia</td>*@
+                <td>@item.CNPJ</td>
+                @* <td>@item.Email</td>*@
+                <td>@item.Endereco.Cidade</td>
+                <td>@item.Endereco.Estado</td>
+                <td>@item.Telefone</td>
+                <td>
+                    @if (item.DataCadastro != null)
+                    {
+                        @item.DataCadastro.Value.ToString("dd/MM/yyyy")
+                    }
+                </td>
+                <td>@item.Categoria.Categoria</td>
+                <td>@item.Status</td>
+                <td>@item.DadosBancario.Agencia <br /> @item.DadosBancario.Conta</td>
+
+                <td>
+                    <a href="@Url.Action("AddOrUpdate",new {id=item.IdEstabelecimento})"><i class="fas fa-edit"></i></a>
+
+                    <a class="delete" onclick="ConfirmDelete(@item.IdEstabelecimento)" href="#"><i class="fas fa-trash"></i></a>
+                </td>
+                <td>...</td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#search").keyup(function () {
+
+            var value = $(this).val().toLowerCase();
+
+            $("#estabelecimento tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+    });
+
+    function ConfirmDelete(param) {
+
+        if (window.confirm("Você realmente quer excluir registro?")) {
+
+            location.href = "/Estabelecimento/Delete/" + param;
+
+        } else {
+            return;
+        }
+    };
+
+</script>

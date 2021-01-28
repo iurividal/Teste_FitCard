@@ -1,6 +1,17 @@
 ﻿@model Teste_FitCard.Models.EstabelecimentoModel
 @{
     ViewBag.Title = "Cadastro";
+    var categorialist = (MultiSelectList)TempData["CategoriaList"];
+
+    IEnumerable<string> status = new List<string>
+{
+        "Ativo",
+        "Inativo"
+    };
+
+    var listaAtivo = new MultiSelectList(status);
+
+
 }
 
 <h3>Cadastro/Editar</h3>
@@ -8,8 +19,9 @@
 
 @using (Html.BeginForm("AddOrUpdate", "Estabelecimento", null, FormMethod.Post, new { @id = "form-cadastro", @class = "form-validade" }))
 {
-    @Html.ValidationSummary()
+
     @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
 
     @Html.HiddenFor(m => m.IdEstabelecimento)
     <div class="card">
@@ -18,13 +30,13 @@
             <div class="row">
                 <div class="col-md-8 form-group">
                     @Html.LabelFor(m => m.NomeRazao)
-                    @Html.TextBoxFor(m => m.NomeRazao, new { @class = "form-control" })
-                    @Html.ValidationMessageFor(m => m.NomeRazao);
+                    @Html.TextBoxFor(m => m.NomeRazao, new { @class = "form-control", @required = true })
+                    @Html.ValidationMessageFor(m => m.NomeRazao)
                 </div>
 
                 <div class="col-md-4">
                     @Html.LabelFor(m => m.CNPJ)
-                    @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control cnpj" })
+                    @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control cnpj", @required = true })
                 </div>
             </div>
 
@@ -36,13 +48,20 @@
                 </div>
                 <div class="col-md-4">
                     @Html.LabelFor(m => m.Categoria.Categoria)
-                    @Html.DropDownList("Categoria", null, string.Empty, new { @class = "form-control" })
+                    @*@Html.DropDownList("Categoria", null, null, new { @class = "form-control" })*@
+                    @Html.DropDownListFor(m => m.Categoria.IdCategoria, new MultiSelectList(categorialist, "Value", "Text"), new { @class = "form-control" })
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6">
                     @Html.LabelFor(m => m.DataCadastro)
                     @Html.TextBoxFor(m => m.DataCadastro, new { @class = "form-control date" })
+                </div>
+
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Status)
+                    @Html.DropDownListFor(m => m.Status, new MultiSelectList(listaAtivo, "Text", "Text"), new { @class = "form-control" })
+
                 </div>
             </div>
 
@@ -51,12 +70,12 @@
             <div class="row">
                 <div class="col-md-6">
                     @Html.LabelFor(m => m.Email)
-                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email" })
                 </div>
 
                 <div class="col-md-6">
                     @Html.LabelFor(m => m.Telefone)
-                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control phone_with_ddd" })
                 </div>
             </div>
 
@@ -102,3 +121,29 @@
 
     <button id="btnSubmit" type="submit" class="btn btn-primary">Confirmar</button>
 }
+
+<script>
+
+    $(document).ready(function() {
+
+        var msgError = '@ViewBag.error';
+        var msgsucesso = '@ViewBag.sucesso';
+
+        if (msgError.length > 0) {
+
+            //alert(msgError);
+
+            MessageError(msgError);
+        }
+
+        if (msgsucesso.length > 0) {
+            //alert(msgsucesso);
+            MessageSucess(msgsucesso);
+        }
+
+     
+
+
+    });
+
+</script>

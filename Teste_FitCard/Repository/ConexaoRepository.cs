@@ -9,7 +9,7 @@ namespace Teste_FitCard.Repository
 {
     public class ConexaoRepository
     {
-        public SqlConnection Conexao =>
-            new SqlConnection(ConfigurationManager.ConnectionStrings["fitcardTeste"].ConnectionString);
+        public SqlConnection Conexao => new SqlConnection(ConfigurationManager.ConnectionStrings["fitcardTeste"].ConnectionString);
+
     }
 }
