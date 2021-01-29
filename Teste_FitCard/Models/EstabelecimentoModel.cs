@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Teste_FitCard.Models
@@ -10,6 +11,7 @@ namespace Teste_FitCard.Models
         public string NomeFantasia { get; set; }
 
 
+        [DisplayName("Data de Abertura")]
         [DataType(DataType.Date)]
         public DateTime? DataCadastro { get; set; }
 

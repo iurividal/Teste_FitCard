@@ -24,9 +24,14 @@ namespace Teste_FitCard.Controllers
         public ActionResult AddOrUpdate(string id)
         {
             CarregaCategoria();
+            CarregaEstados();
+
+
             var model = new EstabelecimentoModel();
             if (!string.IsNullOrEmpty(id))
                 model = _repository.GetAll().First(a => a.IdEstabelecimento == Convert.ToInt32(id));
+
+
 
             return View(model);
         }
@@ -55,6 +60,7 @@ namespace Teste_FitCard.Controllers
             }
 
             CarregaCategoria();
+            CarregaEstados();
 
             return View(model);
         }
@@ -74,5 +80,13 @@ namespace Teste_FitCard.Controllers
 
             TempData["CategoriaList"] = new MultiSelectList(cat, "IdCategoria", "Categoria");
         }
+
+        private void CarregaEstados()
+        {
+            var estados = new Servicos.IGBE_Service().GetEstados().Result;
+
+            TempData["ESTADOS"] = new MultiSelectList(estados, "sigla", "nome");
+        }
+
     }
 }
