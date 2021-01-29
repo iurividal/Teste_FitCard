@@ -15,7 +15,8 @@ Tecnologia Utilizada:
 - Razor
 - jquery
 - javascript
-- Banco de dados SQL 
+- BootStrap 4.*
+- Banco de dados SQL
 
 Previa do sistema funcionando você encontra aqui http://iurisvidal.azurewebsites.net/
 
