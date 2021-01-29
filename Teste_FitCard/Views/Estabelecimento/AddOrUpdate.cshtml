@@ -3,15 +3,11 @@
     ViewBag.Title = "Cadastro";
     var categorialist = (MultiSelectList)TempData["CategoriaList"];
 
-    IEnumerable<string> status = new List<string>
-{
-        "Ativo",
-        "Inativo"
-    };
+    IEnumerable<string> status = new List<string> { "Ativo", "Inativo" };
 
     var listaAtivo = new MultiSelectList(status);
 
-    var estados = (MultiSelectList)TempData["ESTADOS"];
+    var states = (List<SelectListItem>)ViewBag.States;
 }
 
 <h3>Cadastro/Editar</h3>
@@ -29,13 +25,13 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8 form-group">
-                    @Html.LabelFor(m => m.NomeRazao)
+                   * @Html.LabelFor(m => m.NomeRazao)
                     @Html.TextBoxFor(m => m.NomeRazao, new { @class = "form-control", @required = true })
                     @Html.ValidationMessageFor(m => m.NomeRazao)
                 </div>
 
-                <div class="col-md-4">
-                    @Html.LabelFor(m => m.CNPJ)
+                <div class="col-md-4 form-group">
+                 * @Html.LabelFor(m => m.CNPJ)
                     @Html.TextBoxFor(m => m.CNPJ, new { @class = "form-control cnpj", @required = true })
                 </div>
             </div>
@@ -46,21 +42,21 @@
                     @Html.TextBoxFor(m => m.NomeFantasia, new { @class = "form-control" })
 
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4 form-group">
                     @Html.LabelFor(m => m.Categoria.Categoria)
                     @*@Html.DropDownList("Categoria", null, null, new { @class = "form-control" })*@
-                    @Html.DropDownListFor(m => m.Categoria.IdCategoria, new MultiSelectList(categorialist, "Value", "Text"), new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Categoria.IdCategoria, new MultiSelectList(categorialist, "Value", "Text"), "--Selecione--", new { @class = "form-control" })
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.DataCadastro)
-                    @Html.TextBoxFor(m => m.DataCadastro, new { @class = "form-control", @type = "date" })
+                    @Html.TextBoxFor(m => m.DataCadastro, new { @class = "form-control date",  })
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.Status)
-                    @Html.DropDownListFor(m => m.Status, new MultiSelectList(listaAtivo, "Text", "Text"), new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Status, new MultiSelectList(listaAtivo, "Text", "Text"), "--Selecione--", new { @class = "form-control" })
 
                 </div>
             </div>
@@ -68,12 +64,12 @@
             <hr />
             <p><h5>Dados de Contato</h5></p>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.Email)
                     @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email" })
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.Telefone)
                     @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control phone_with_ddd" })
                 </div>
@@ -83,19 +79,21 @@
             <p><h5>Dados de Endereço</h5></p>
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.Endereco.Estado)
-                    @Html.DropDownListFor(m => m.Endereco.Estado, new MultiSelectList(estados, "Value", "Text"), new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Endereco.Estado, states, "--Selecione--", new { @class = "form-control", @id = "ddlestado" })
+                    @*@Html.DropDownListFor(m => m.Endereco.Estado, new MultiSelectList("Estados", "Value", "Text"), new { @class = "form-control" })*@
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.Endereco.Cidade)
-                    @Html.TextBoxFor(m => m.Endereco.Cidade, new { @class = "form-control" })
+                    @Html.DropDownListFor(m => m.Endereco.Cidade, new SelectList(string.Empty, "Value", "Text", "--Selecione--"), new { @class = "form-control", @id = "ddlCidade" })
+                    @*@Html.TextBoxFor(m => m.Endereco.Cidade, new { @class = "form-control" })*@
                 </div>
 
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-12 form-group">
                     @Html.LabelFor(m => m.Endereco.Logradouro)
                     @Html.TextBoxFor(m => m.Endereco.Logradouro, new { @class = "form-control" })
                 </div>
@@ -142,7 +140,33 @@
         }
 
 
+        $("#ddlestado").change(function () {
 
+            var uf = $("#ddlestado").val();
+            $("#ddlCidade").empty();
+
+            console.log(uf);
+
+             $.ajax({
+                type: 'POST',
+                url: '@Url.Action("GetCidade")',
+                dataType: 'json',
+                 data: { uf: uf },
+                success: function (states) {
+
+                    $.each(states, function (i, state) {
+                        $("#ddlCidade").append('<option value="' + state.Value + '">' +
+                         state.Text + '</option>');
+
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed to retrieve states.' + ex);
+                }
+            });
+
+
+        });
 
     });
 

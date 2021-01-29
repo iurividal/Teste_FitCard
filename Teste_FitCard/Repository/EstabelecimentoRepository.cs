@@ -168,7 +168,7 @@ namespace Teste_FitCard.Repository
                     IdEstabelecimento = Convert.ToInt32(item.IDESTABELECIMENTO)
 
 
-                });
+                }).OrderBy(a => a.IdEstabelecimento);
 
             }
         }
@@ -184,7 +184,7 @@ namespace Teste_FitCard.Repository
 
                 db.Execute("DELETE FROM ESTABELECIMENTO WHERE IDESTABELECIMENTO = @IDESTABELECIMENTO",
                                     new { IDESTABELECIMENTO = id });
-               
+
                 db.Execute("DELETE FROM PESSOA WHERE IDPESSOA = @IDPESSOA", new { IDPESSOA = response.IDPESSOA });
 
 

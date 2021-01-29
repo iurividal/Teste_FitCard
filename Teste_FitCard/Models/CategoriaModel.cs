@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Teste_FitCard.Models
 {
-    public class CategoriaModel 
+    public class CategoriaModel
     {
-        [Key]
+
         public int IdCategoria { get; set; }
 
         [MaxLength(100)]

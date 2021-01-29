@@ -83,10 +83,27 @@ namespace Teste_FitCard.Controllers
 
         private void CarregaEstados()
         {
-            var estados = new Servicos.IGBE_Service().GetEstados().Result;
+            var estados = new Servicos.IGBE_Service().GetEstados().OrderBy(a => a.nome).ToList();
 
-            TempData["ESTADOS"] = new MultiSelectList(estados, "sigla", "nome");
+            var states = new List<SelectListItem>();
+
+            estados.ForEach(item =>
+            {
+                states.Add(new SelectListItem { Text = item.nome, Value = item.sigla });
+
+            });
+
+            ViewBag.States = states;
+
         }
 
+
+        [HttpPost]
+        public JsonResult GetCidade(string uf)
+        {
+            var cidades = new Servicos.IGBE_Service().GetCidades(uf);
+
+            return Json(new SelectList(cidades, "nome", "nome"));
+        }
     }
 }
