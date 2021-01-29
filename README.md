@@ -20,5 +20,11 @@ Tecnologia Utilizada:
 
 Previa do sistema funcionando você encontra aqui http://iurisvidal.azurewebsites.net/
 
+* Detalhes de Modelagem do Banco
+
+Entidades
+Pessoa,Categoria,Estabelecimento
+
+Sistema está preparado para uma alteração no futuro caso uma Empresa tenha mais de um estabelecimento em cima do mesmo CNPJ, por isso a entidade Pessoa dessa forma consigo cadastrar 1-N estabelecimentos para o mesmo CNPJ.
 
 
