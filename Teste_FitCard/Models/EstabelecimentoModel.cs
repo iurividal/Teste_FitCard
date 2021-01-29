@@ -12,9 +12,8 @@ namespace Teste_FitCard.Models
         public string NomeFantasia { get; set; }
 
 
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [DisplayName("Data de Abertura")]
-        [DataType(DataType.Date)]
         public DateTime? DataCadastro { get; set; }
 
         public CategoriaModel Categoria { get; set; } = new CategoriaModel();

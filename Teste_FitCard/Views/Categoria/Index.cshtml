@@ -14,7 +14,7 @@
         </div>
 
         <div class="col-md-8 form-group">
-            Categoria: @Html.TextBox("Categoria", "", new { @class = "form-control" })
+            Categoria: @Html.TextBox("Categoria", "", new { @class = "form-control", @required = true })
         </div>
 
         <div class="col-md-2 form-inline">
@@ -28,27 +28,47 @@
 
 <table id="categorias" class="table">
     <thead class="thead-dark">
-    <tr>
-        <th scope="col">
-            Código
-        </th>
-        <th scope="col">
-            Categoria
-        </th>
-        <th scope="col">
-            Ação
-        </th>
-    </tr>
+        <tr>
+            <th scope="col">
+                Código
+            </th>
+            <th scope="col">
+                Categoria
+            </th>
+            <th scope="col">
+                Ação
+            </th>
+        </tr>
     </thead>
     <tbody>
-    @foreach (var item in Model.ToList())
-    {
-        <tr>
-            <th scope="row">@item.IdCategoria</th>
-            <td>@item.Categoria</td>
-            <td><a href="@Url.Action("Delete",new{id=@item.IdCategoria})"><i class="fas fa-trash"></i></a></td>
-        </tr>
-    }
+        @foreach (var item in Model.ToList())
+        {
+            <tr>
+                <th scope="row">@item.IdCategoria</th>
+                <td>@item.Categoria</td>
+                <td><a href="@Url.Action("Delete",new{id=@item.IdCategoria})"><i class="fas fa-trash"></i></a></td>
+            </tr>
+        }
     </tbody>
 
 </table>
+
+<script>
+    $(document).ready(function () {
+
+        var sucesso = '@ViewBag.sucesso';
+        var erro = '@ViewBag.erro';
+
+        if (sucesso.length > 0) {
+            MessageSucess(sucesso);
+
+            $("#Categoria").val('');
+        }
+
+        if (erro.length > 0) {
+            MessageError(erro);
+        }
+
+    });
+
+</script>

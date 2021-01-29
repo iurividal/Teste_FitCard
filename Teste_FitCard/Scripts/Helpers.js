@@ -48,7 +48,7 @@
 
         if (!validarCNPJ(cnpj)) {
             alert('CNPJ ' + cnpj + ' é invalido');
-
+            $(".cnpj").val('');
             $(".cnpj").focus();
         }
     });

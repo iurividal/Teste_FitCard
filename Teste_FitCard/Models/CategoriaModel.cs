@@ -5,7 +5,8 @@ namespace Teste_FitCard.Models
 {
     public class CategoriaModel
     {
-
+        
+        
         public int IdCategoria { get; set; }
 
         [MaxLength(100)]

@@ -20,8 +20,16 @@ namespace Teste_FitCard.Controllers
         [HttpPost]
         public ActionResult Index(CategoriaModel model)
         {
+            try
+            {
+                _cr.AddOrUpdate(model);
+                ViewBag.sucesso = "Dados salvo com sucesso";
+            }
+            catch (Exception e)
+            {
+                ViewBag.erro = "ocorreu um problema ao tentar salvar os dados erro";
+            }
 
-            _cr.AddOrUpdate(model);
 
             return View(_cr.GetCategoria());
         }

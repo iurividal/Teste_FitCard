@@ -33,7 +33,7 @@ namespace Teste_FitCard.Controllers
             {
                 CarregaEstadosECidades();
                 model = _repository.GetAll().First(a => a.IdEstabelecimento == Convert.ToInt32(id));
-                
+
             }
 
 
@@ -68,7 +68,7 @@ namespace Teste_FitCard.Controllers
             CarregaCategoria();
             CarregaEstadosECidades();
 
-            return View(model);
+            return View(new EstabelecimentoModel());
         }
 
         public ActionResult Delete(int id)
@@ -102,11 +102,15 @@ namespace Teste_FitCard.Controllers
                     states.Add(new SelectListItem { Text = item.nome, Value = item.sigla });
 
                 });
+
+              
                 ViewBag.States = states;
             },
-                
+
                 () =>
                 {
+                    if (Session["CIDADES"] != null) return;
+
                     var cidades = servicos.GetCidades().ToList();
                     var cidadeList = new List<SelectListItem>();
                     cidades.ForEach(item =>
@@ -114,7 +118,7 @@ namespace Teste_FitCard.Controllers
                         cidadeList.Add(new SelectListItem { Text = item.nome, Value = item.nome });
                     });
 
-                    ViewBag.Cidades = cidadeList;
+                    Session["CIDADES"] = cidadeList;
                 });
 
         }
