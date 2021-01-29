@@ -37,7 +37,7 @@ namespace Teste_FitCard.Repository
                         {
                             NOMERAZAO = model.NomeRazao,
                             NOMEFANTASIA = model.NomeFantasia,
-                            DOCUMENTO = model.CNPJ,
+                            DOCUMENTO = string.Join("", model.CNPJ.ToCharArray().Where(Char.IsDigit)),
                             EMAIL = model.Email,
                             TELEFONE = model.Telefone,
                             ENDERECO = model.Endereco.Logradouro,
@@ -87,7 +87,7 @@ namespace Teste_FitCard.Repository
                         {
                             NOMERAZAO = model.NomeRazao,
                             NOMEFANTASIA = model.NomeFantasia,
-                            DOCUMENTO = model.CNPJ,
+                            DOCUMENTO = string.Join("", model.CNPJ.ToCharArray().Where(Char.IsDigit)),
                             EMAIL = model.Email,
                             TELEFONE = model.Telefone,
                             ENDERECO = model.Endereco.Logradouro,

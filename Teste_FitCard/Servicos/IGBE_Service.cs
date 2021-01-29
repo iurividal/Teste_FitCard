@@ -13,12 +13,10 @@ namespace Teste_FitCard.Servicos
     public class IGBE_Service
     {
         Uri baseAddress = new Uri("https://servicodados.ibge.gov.br/api/v1/localidades/");
-        static HttpClient client = new HttpClient();
+        static HttpClient _client = new HttpClient();
 
         public IEnumerable<EstadosModel> GetEstados()
         {
-
-            List<EstadosModel> estados = null;
             var client = new RestClient(baseAddress + "/estados");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
@@ -30,6 +28,16 @@ namespace Teste_FitCard.Servicos
         public IEnumerable<CidadeModel> GetCidades(string uf)
         {
             var client = new RestClient(baseAddress + $"/estados/{uf}/municipios");
+            client.Timeout = -1;
+            var request = new RestRequest(Method.GET);
+            IRestResponse response = client.Execute(request);
+
+            return JsonConvert.DeserializeObject<IEnumerable<CidadeModel>>(response.Content);
+        }
+
+        public IEnumerable<CidadeModel> GetCidades()
+        {
+            var client = new RestClient(baseAddress + "/municipios");
             client.Timeout = -1;
             var request = new RestRequest(Method.GET);
             IRestResponse response = client.Execute(request);

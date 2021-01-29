@@ -12,6 +12,7 @@ namespace Teste_FitCard.Models
         [Required(ErrorMessage = "Por favor informe o Nome Razão")]
         public string NomeRazao { get; set; }
 
+       
         [Required(ErrorMessage = "Por favor informe o CNPJ")]
         public string CNPJ { get; set; }
 

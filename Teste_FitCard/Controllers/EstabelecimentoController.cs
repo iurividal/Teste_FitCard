@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Teste_FitCard.Models;
@@ -24,12 +25,17 @@ namespace Teste_FitCard.Controllers
         public ActionResult AddOrUpdate(string id)
         {
             CarregaCategoria();
-            CarregaEstados();
+            CarregaEstadosECidades();
 
 
             var model = new EstabelecimentoModel();
             if (!string.IsNullOrEmpty(id))
+            {
+                CarregaEstadosECidades();
                 model = _repository.GetAll().First(a => a.IdEstabelecimento == Convert.ToInt32(id));
+                
+            }
+
 
 
 
@@ -60,7 +66,7 @@ namespace Teste_FitCard.Controllers
             }
 
             CarregaCategoria();
-            CarregaEstados();
+            CarregaEstadosECidades();
 
             return View(model);
         }
@@ -81,19 +87,35 @@ namespace Teste_FitCard.Controllers
             TempData["CategoriaList"] = new MultiSelectList(cat, "IdCategoria", "Categoria");
         }
 
-        private void CarregaEstados()
+        private void CarregaEstadosECidades()
         {
-            var estados = new Servicos.IGBE_Service().GetEstados().OrderBy(a => a.nome).ToList();
 
-            var states = new List<SelectListItem>();
+            var servicos = new Servicos.IGBE_Service();
+            var estados = servicos.GetEstados().OrderBy(a => a.nome).ToList();
 
-            estados.ForEach(item =>
+
+            Parallel.Invoke(() =>
             {
-                states.Add(new SelectListItem { Text = item.nome, Value = item.sigla });
+                var states = new List<SelectListItem>();
+                estados.ForEach(item =>
+                {
+                    states.Add(new SelectListItem { Text = item.nome, Value = item.sigla });
 
-            });
+                });
+                ViewBag.States = states;
+            },
+                
+                () =>
+                {
+                    var cidades = servicos.GetCidades().ToList();
+                    var cidadeList = new List<SelectListItem>();
+                    cidades.ForEach(item =>
+                    {
+                        cidadeList.Add(new SelectListItem { Text = item.nome, Value = item.nome });
+                    });
 
-            ViewBag.States = states;
+                    ViewBag.Cidades = cidadeList;
+                });
 
         }
 
@@ -105,5 +127,7 @@ namespace Teste_FitCard.Controllers
 
             return Json(new SelectList(cidades, "nome", "nome"));
         }
+
+
     }
 }

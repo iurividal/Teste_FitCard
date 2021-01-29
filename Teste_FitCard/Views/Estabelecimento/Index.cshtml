@@ -25,7 +25,7 @@
         <tr class="text-center">
 
 
-            <th scope="col">
+            <th scope="col" class="d-none d-sm-table-cell">
                 #
             </th>
 
@@ -41,27 +41,27 @@
             @*<th scope="col">
                     E-mail
                 </th>*@
-            <th scope="col">
-                Cidade
-            </th>
-            <th scope="col">
-                Estado
-            </th>
-            <th scope="col">
-                Telefone
-            </th>
-            <th scope="col">
+            @*<th scope="col">
+                    Cidade
+                </th>*@
+            @*<th scope="col">
+                    Estado
+                </th>*@
+            @*<th scope="col">
+                    Telefone
+                </th>*@
+            <th scope="col" class="d-none d-sm-table-cell">
                 Data de Cadastro
             </th>
-            <th scope="col">
+            <th scope="col" class="d-none d-sm-table-cell">
                 Categoria
             </th>
-            <th scope="col">
+            <th scope="col" class="d-none d-sm-table-cell">
                 Status
             </th>
-            <th scope="col">
-                Agência / Conta
-            </th>
+            @*<th scope="col">
+                    Agência / Conta
+                </th>*@
             <th scope="col">
                 Ação
             </th>
@@ -75,30 +75,100 @@
         {
             <tr class="text-left font-weight-normal">
 
-                <th scope="row">@item.IdEstabelecimento</th>
+                <th scope="row" class="d-none d-sm-table-cell">@item.IdEstabelecimento</th>
                 <td>@item.NomeRazao</td>
-                @* <td>@item.NomeFantasia</td>*@
-                <td>@item.CNPJ</td>
-                @* <td>@item.Email</td>*@
-                <td>@item.Endereco.Cidade</td>
-                <td>@item.Endereco.Estado</td>
-                <td>@item.Telefone</td>
-                <td>
+                <td>@item.CNPJ.FormatCNPJ()</td>
+                <td class="text-center d-none d-sm-table-cell">
                     @if (item.DataCadastro != null)
                     {
                         @item.DataCadastro.Value.ToString("dd/MM/yyyy")
                     }
-                </td>
-                <td>@item.Categoria.Categoria</td>
-                <td>@item.Status</td>
-                <td>@item.DadosBancario.Agencia <br /> @item.DadosBancario.Conta</td>
 
-                <td>
+
+                </td>
+                <td class="d-none d-sm-table-cell">@item.Categoria.Categoria</td>
+                <td class="d-none d-sm-table-cell">@item.Status</td>
+
+
+                <td class="text-center">
                     <a href="@Url.Action("AddOrUpdate",new {id=item.IdEstabelecimento})"><i class="fas fa-edit"></i></a>
 
                     <a class="delete" onclick="ConfirmDelete(@item.IdEstabelecimento)" href="#"><i class="fas fa-trash"></i></a>
                 </td>
-                <td>...</td>
+                <td>
+                    <a href="#" data-toggle="modal" data-target="#detail_@item.IdEstabelecimento"><i class="fas fa-search-plus"></i></a>
+
+
+                    <!-- The Modal -->
+                    <div class="modal" id="detail_@item.IdEstabelecimento">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Detalhes</h4>
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+
+                                    <div class="row" >
+                                        <div class="col">
+                                            Data Cadastro: @item.DataCadastro 
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            Telefone: @item.Telefone
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            Estado: @item.Endereco.Estado
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            Cidade: @item.Endereco.Cidade
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            Logradouro: @item.Endereco.Logradouro
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col">
+                                            Âgencia: @item.DadosBancario.Agencia
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            Conta Corrente: @item.DadosBancario.Conta
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </td>
             </tr>
 
         }
@@ -117,6 +187,9 @@
                 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
             });
         });
+
+
+
     });
 
     function ConfirmDelete(param) {
