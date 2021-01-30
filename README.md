@@ -27,4 +27,12 @@ Pessoa,Categoria,Estabelecimento
 
 Sistema está preparado para uma alteração no futuro caso uma Empresa tenha mais de um estabelecimento em cima do mesmo CNPJ, por isso a entidade Pessoa dessa forma consigo cadastrar 1-N estabelecimentos para o mesmo CNPJ.
 
+Algumas imagens do Sistema
 
+![home](https://user-images.githubusercontent.com/25581909/106340550-ee631300-6278-11eb-8c7c-cb0b4d7b73e9.png)
+
+![cadastro de categorias](https://user-images.githubusercontent.com/25581909/106340563-fcb12f00-6278-11eb-9d7a-df44614672cd.png)
+
+![cadastro_estabelecimento](https://user-images.githubusercontent.com/25581909/106340568-03d83d00-6279-11eb-85d1-e2aa7d2134ce.png)
+
+![Lista Estabelecimentos](https://user-images.githubusercontent.com/25581909/106340571-09358780-6279-11eb-9d13-e47594763811.png)
