@@ -3,25 +3,37 @@
     ViewBag.Title = "Index";
 }
 
+<h3>Cadastrar/Editar Categorias</h3>
 
-<h3>Categorias</h3>
-
-@using (Html.BeginForm("Index", "Categoria", null, FormMethod.Post, new { @class = "" }))
+@using (Html.BeginForm("Index", "Categoria", null, FormMethod.Post, new { @class = "", @id = "form-categoria" }))
 {
-    <div class="row">
+
+    <div class="form-row">
         <div class="col-md-2 form-group">
-            Código: @Html.TextBox("IdCategoria", "", new { @class = "form-control", @readonly = true, placeholder = "Automático" })
+
+            @Html.TextBox("IdCategoria", "", new { @class = "form-control", @readonly = true, placeholder = "Automático" })
+        </div>
+        <div class="col-md-10">
+
+            <div class="input-group mb-3">
+
+                @Html.TextBox("Categoria", "", new { @class = "form-control", @required = true, placeholder = "Categoria" })
+                <div class="input-group-prepend">
+                    <button class="btn btn-primary" id="btnSubmit" type="submit">Adicionar</button>
+                </div>
+                <div id="divCancancelar" class="input-group-prepend d-none">
+                    <button class="btn btn-danger" id="btnCancelar" type="button">Cancelar</button>
+                </div>
+            </div>
+
+
         </div>
 
-        <div class="col-md-8 form-group">
-            Categoria: @Html.TextBox("Categoria", "", new { @class = "form-control", @required = true })
-        </div>
 
-        <div class="col-md-2 form-inline">
-            <button class="btn btn-primary">Adicionar</button>
-        </div>
 
     </div>
+
+
 }
 
 <br />
@@ -46,7 +58,13 @@
             <tr>
                 <th scope="row">@item.IdCategoria</th>
                 <td>@item.Categoria</td>
-                <td><a href="@Url.Action("Delete",new{id=@item.IdCategoria})"><i class="fas fa-trash"></i></a></td>
+                <td>
+
+                    <a href="#" onclick="Editar('@item.IdCategoria','@item.Categoria')" id="edit"><i class="fas fa-edit"></i></a>
+
+                    <a href="@Url.Action("Delete",new{id=@item.IdCategoria})"><i class="fas fa-trash"></i></a>
+
+                </td>
             </tr>
         }
     </tbody>
@@ -62,6 +80,7 @@
         if (sucesso.length > 0) {
             MessageSucess(sucesso);
 
+            $("#IdCategoria").val('');
             $("#Categoria").val('');
         }
 
@@ -69,6 +88,43 @@
             MessageError(erro);
         }
 
+
+        $("#btnCancelar").click(function () {
+            $("#IdCategoria").val('');
+            $("#Categoria").val('');
+            document.getElementById("btnSubmit").innerText = "Adicionar";
+            $("#divCancancelar").addClass("d-none");
+
+        })
+
     });
+
+    $("#form-categoria").validate({
+
+        errorPlacement: function () {
+            return false;
+        },
+        rules: {
+
+            Categoria: {
+                required: true
+
+            }
+
+        },
+        submitHandler: function (form) {
+
+                       form.submit();
+        }
+    });
+
+
+    function Editar(idcategoria, categoria) {
+        $("#IdCategoria").val(idcategoria);
+        $("#Categoria").val(categoria);
+        $('#divCancancelar').removeClass("d-none");
+        document.getElementById("btnSubmit").innerText = "Atualzar";
+
+    }
 
 </script>

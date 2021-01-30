@@ -46,7 +46,7 @@
 
                 </div>
                 <div class="col-md-4 form-group">
-                   *@Html.LabelFor(m => m.Categoria.Categoria)
+                    *@Html.LabelFor(m => m.Categoria.Categoria)
                     @*@Html.DropDownList("Categoria", null, null, new { @class = "form-control" })*@
                     @Html.DropDownListFor(m => m.Categoria.IdCategoria, new MultiSelectList(categorialist, "Value", "Text"), "--Selecione--", new { @class = "form-control", @required = true })
                     @Html.ValidationMessageFor(m => m.Categoria.Categoria, null, new { @class = "alert-danger" })
@@ -55,7 +55,7 @@
             <div class="row">
                 <div class="col-md-6 form-group">
                     @Html.LabelFor(m => m.DataCadastro)
-                    @Html.TextBoxFor(m => m.DataCadastro, new { @class = "form-control date",@autocomplete="off" })
+                    @Html.TextBoxFor(m => m.DataCadastro, new { @class = "form-control date", @autocomplete = "off" })
                 </div>
 
                 <div class="col-md-6 form-group">
@@ -172,7 +172,8 @@
                 });
             },
             error: function (ex) {
-                alert('Failed to retrieve states.' + ex);
+            MessageError("falha para carregar as cidades" + ex)
+
             }
         });
 

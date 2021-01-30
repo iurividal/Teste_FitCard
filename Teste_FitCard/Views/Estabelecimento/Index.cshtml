@@ -113,9 +113,9 @@
                                 <!-- Modal body -->
                                 <div class="modal-body">
 
-                                    <div class="row" >
+                                    <div class="row">
                                         <div class="col">
-                                            Data Cadastro: @item.DataCadastro 
+                                            Data Cadastro: @item.DataCadastro
                                         </div>
                                     </div>
 
@@ -194,13 +194,31 @@
 
     function ConfirmDelete(param) {
 
-        if (window.confirm("Você realmente quer excluir registro?")) {
+        bootbox.confirm({
+            message: "Você realmente quer excluir registro?",
+            buttons: {
+                confirm: {
+                    label: 'Sim',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: 'Não',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
 
-            location.href = "/Estabelecimento/Delete/" + param;
+                if (result) {
+                    location.href = "/Estabelecimento/Delete/" + param;
 
-        } else {
-            return;
-        }
+                    MessageSucess('registro excluido com sucesso');
+                }
+                // console.log('This was logged in the callback: ' + result);
+            }
+        });
+
+
+        
     };
 
 </script>

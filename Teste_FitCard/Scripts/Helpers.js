@@ -47,16 +47,14 @@
         if (cnpj === "") return;
 
         if (!validarCNPJ(cnpj)) {
-            alert('CNPJ ' + cnpj + ' é invalido');
+            DisplayAlert('CNPJ ' + cnpj + ' é inválido')
             $(".cnpj").val('');
             $(".cnpj").focus();
         }
     });
 
 
-
 });
-
 
 
 function MessageSucess(msg) {
@@ -67,7 +65,20 @@ function MessageError(msg) {
     toastr["error"](msg);
 }
 
+function DisplayAlert(msg) {
+    
+    bootbox.alert({
+        title: 'Aviso',
+        message: msg,
+        callback: function () {
+            //console.log('This was logged in the callback!');
+        }
+    })
+}
+
+
 function validarCNPJ(cnpj) {
+
 
     cnpj = cnpj.replace(/[^\d]+/g, '');
 

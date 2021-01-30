@@ -40,14 +40,20 @@ namespace Teste_FitCard
             scriptBundle
                 .Include("~/Scripts/bootstrap.js");
 
+
             // Bootstrap
             styleBundle
                 .Include("~/Content/bootstrap.css");
 
-            // Bootstrap
+            //alerts boxbox
+            scriptBundle
+                .Include("~/Scripts/bootbox.js");
+
+
+            // toast
             styleBundle
                 .Include("~/Content/toastr.min.css");
-            
+
             // Custom site styles
             styleBundle
                 .Include("~/Content/Site.css");

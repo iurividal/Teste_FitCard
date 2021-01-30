@@ -23,6 +23,7 @@ namespace Teste_FitCard.Controllers
             try
             {
                 _cr.AddOrUpdate(model);
+
                 ViewBag.sucesso = "Dados salvo com sucesso";
             }
             catch (Exception e)
